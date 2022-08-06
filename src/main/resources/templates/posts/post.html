@@ -15,8 +15,15 @@
 <div class="container">
 
     <div class="py-5 text-center">
-        <h2 value="제목" th:value="${post.title}">글 제목 뜨는 자리</h2>
+        <h2 value="제목">글 제목 뜨는 자리</h2>
     </div>
+    <form th:method="post">
+    <div class="row">
+        <div class="col">
+            <button type="submit">삭제</button>
+        </div>
+    </div>
+    </form>
 
     <!-- 추가 -->
 
@@ -42,7 +49,8 @@
     <div class="row">
         <div class="col">
             <button class="w-100 btn btn-primary btn-lg"
-                    onclick="location.href='editForm.html'"
+                    onclick="location.href='editPost.html'"
+                    th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.postId})}'|"
                     type="button">상품 수정</button>
         </div>
         <div class="col">
