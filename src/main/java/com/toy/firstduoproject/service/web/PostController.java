@@ -20,7 +20,12 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/posts")
+    @GetMapping("/posts/add")
+    public String addForm(){
+        return "posts/addPost";
+    }
+
+    @PostMapping("/posts/add")
     public String addPost(@ModelAttribute PostSaveRequestDto requestDto) {
         postService.create(requestDto);
         return "redirect:/posts";
@@ -40,14 +45,21 @@ public class PostController {
         return "posts";
     }
 
-    @PatchMapping("/posts/{post-id}")
+    @GetMapping("/posts/{post-id}/edit")
+    public String editForm(@PathVariable("post-id") Long postId, Model model){
+        Posts post = postService.findById(postId);
+        model.addAttribute("post",post);
+        return "posts/editPost";
+    }
+
+    @PostMapping("/posts/{post-id}/edit")
     public String patchPost(@PathVariable("post-id") Long postId,
                             PostUpdateRequestDto updateDto){
         postService.update(postId,updateDto);
-        return "posts/post";
+        return "redirect:/posts/{post-id}";
     }
 
-    @DeleteMapping("/posts/{post-id}")
+    @PostMapping("/posts/{post-id}")
     public String deletePost(@PathVariable("post-id") Long postId){
         postService.deletePost(postId);
         return "redirect:/posts";
