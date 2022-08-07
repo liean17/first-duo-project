@@ -1,17 +1,15 @@
-package com.toy.firstduoproject.service.web;
+package com.toy.firstduoproject.controller;
 
-import com.toy.firstduoproject.domain.post.Posts;
-import com.toy.firstduoproject.domain.post.PostRepository;
+import com.toy.firstduoproject.domain.entity.Posts;
 import com.toy.firstduoproject.service.PostService;
-import com.toy.firstduoproject.service.web.dto.PostSaveRequestDto;
-import com.toy.firstduoproject.service.web.dto.PostUpdateRequestDto;
+import com.toy.firstduoproject.service.dto.PostSaveRequestDto;
+import com.toy.firstduoproject.service.dto.PostUpdateRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class PostController {
@@ -20,6 +18,11 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @GetMapping("/")
+    public String main() {
+        return "redirect:/posts";
+    }
+
     @GetMapping("/posts/add")
     public String addForm(){
         return "posts/addPost";
@@ -27,7 +30,7 @@ public class PostController {
 
     @PostMapping("/posts/add")
     public String addPost(@ModelAttribute PostSaveRequestDto requestDto) {
-        postService.create(requestDto);
+        postService.createPost(requestDto);
         return "redirect:/posts";
     }
 
@@ -55,7 +58,7 @@ public class PostController {
     @PostMapping("/posts/{post-id}/edit")
     public String patchPost(@PathVariable("post-id") Long postId,
                             PostUpdateRequestDto updateDto){
-        postService.update(postId,updateDto);
+        postService.updatePost(postId,updateDto);
         return "redirect:/posts/{post-id}";
     }
 

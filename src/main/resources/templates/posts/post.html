@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <style>
         .container {
             max-width: 560px;
@@ -15,33 +14,39 @@
 <div class="container">
 
     <div class="py-5 text-center">
-        <h2 value="제목">글 제목 뜨는 자리</h2>
+        <h2 th:text="${post.title}">자유 게시판</h2>
     </div>
+
     <form th:method="post">
-    <div class="row">
-        <div class="col">
-            <button type="submit">삭제</button>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary float-end" style="background-color: crimson"
+                        type="submit">삭제</button>
+            </div>
         </div>
-    </div>
     </form>
+
 
     <!-- 추가 -->
 
     <div>
-        <label for="itemId">글 번호</label>
-        <input type="text" id="itemId" name="itemId" class="form-control" value="1" th:value="${post.postId}" readonly>
+        <label for="id">글 번호</label>
+        <input type="text" id="id" name="id" class="form-control" value="1" th:value="${post.getId}" readonly>
     </div>
     <div>
-        <label for="itemName">글 제목</label>
-        <input type="text" id="itemName" name="itemName" class="form-control" value="상품A" th:value="${post.title}" readonly>
+        <label for="member">작성자</label>
+        <input type="text" id="member" name="member" class="form-control" value="작성자" th:value="${post.member.getNickname()}"
+               readonly>
     </div>
     <div>
-        <label for="price">작성일</label>
-        <input type="text" id="price" name="price" class="form-control" value="10000" th:value="${post.createdAt}" readonly>
+        <label for="createdAt">작성일</label>
+        <input type="text" id="createdAt" name="createdAt" class="form-control" value="작성일"
+               th:value="${#temporals.format(post.createdAt, 'MM-dd HH:mm:ss')}" readonly>
     </div>
     <div>
-        <label for="quantity">내용</label>
-        <input type="text" id="quantity" name="quantity" class="form-control" value="10" th:value="${post.content}" readonly>
+        <label for="content">내용</label>
+        <input type="text" id="content" name="content" class="form-control" value="내용" th:value="${post.content}"
+               readonly>
     </div>
 
     <hr class="my-4">
@@ -50,14 +55,16 @@
         <div class="col">
             <button class="w-100 btn btn-primary btn-lg"
                     onclick="location.href='editPost.html'"
-                    th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.postId})}'|"
-                    type="button">상품 수정</button>
+                    th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.getId})}'|"
+                    type="button">글 수정
+            </button>
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
                     onclick="location.href='posts.html'"
                     th:onclick="|location.href='@{/posts}'|"
-                    type="button">목록으로</button>
+                    type="button">목록으로
+            </button>
         </div>
     </div>
 

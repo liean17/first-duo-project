@@ -1,9 +1,10 @@
 package com.toy.firstduoproject.service.web;
 
-import com.toy.firstduoproject.domain.post.PostRepository;
-import com.toy.firstduoproject.domain.post.Posts;
-import com.toy.firstduoproject.service.web.dto.PostSaveRequestDto;
-import com.toy.firstduoproject.service.web.dto.PostUpdateRequestDto;
+import com.toy.firstduoproject.controller.PostController;
+import com.toy.firstduoproject.repository.PostRepository;
+import com.toy.firstduoproject.domain.entity.Posts;
+import com.toy.firstduoproject.service.dto.PostSaveRequestDto;
+import com.toy.firstduoproject.service.dto.PostUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

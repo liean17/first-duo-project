@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <style>
         .container {
             max-width: 560px;
@@ -14,26 +13,29 @@
 
 <div class="container">
 
+    <form action="post.html" th:action method="post">
     <div class="py-5 text-center">
-        <h2>글 수정 폼</h2>
+        <h2>
+            <label for="title">
+            <input style="font-size: x-large" type="text" id="title" name="title" class="form-control" value="제목" th:value="${post.title}">
+            </label>
+        </h2>
     </div>
 
-    <form action="post.html" th:action method="post">
+
         <div>
-            <label for="postId">글 번호</label>
-            <input type="text" id="postId" name="postId" class="form-control" value="1" th:value="${post.postId}" readonly>
+            <label for="id">글 번호</label>
+            <input type="text" id="id" name="id" class="form-control" value="1" th:value="${post.getId}"
+                   readonly>
         </div>
-        <div>
-            <label for="title">제목</label>
-            <input type="text" id="title" name="title" class="form-control" value="제목" th:value="${post.title}">
-        </div>
-        <div>
-            <label for="author">작성자</label>
-            <input type="text" id="author" name="author" class="form-control" value="작성자" th:value="${post.author}" readonly>
-        </div>
+<!--        <div>-->
+<!--            <label for="author">작성자</label>-->
+<!--            <input type="text" id="author" name="author" class="form-control" value="작성자" th:value="${post.member.getNickname()}"-->
+<!--                   readonly>-->
+<!--        </div>-->
         <div>
             <label for="content">내용</label>
-            <input type="text" id="content" name="content" class="form-control" value="10" th:value="${post.content}">
+            <input type="text" id="content" name="content" class="form-control" value="내용" th:value="${post.content}">
         </div>
 
         <hr class="my-4">
@@ -45,8 +47,9 @@
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='post.html'"
-                        th:onclick="|location.href='@{/posts/{postId}(postId=${post.postId})}'|"
-                        type="button">취소</button>
+                        th:onclick="|location.href='@{/posts/{postId}(postId=${post.getId})}'|"
+                        type="button">취소
+                </button>
             </div>
         </div>
 

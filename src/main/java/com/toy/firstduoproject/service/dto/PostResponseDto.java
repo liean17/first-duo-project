@@ -1,6 +1,7 @@
-package com.toy.firstduoproject.service.web.dto;
+package com.toy.firstduoproject.service.dto;
 
-import com.toy.firstduoproject.domain.post.Posts;
+import com.toy.firstduoproject.domain.entity.Member;
+import com.toy.firstduoproject.domain.entity.Posts;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,12 +11,12 @@ public class PostResponseDto {
     private Long postId;
     private String title;
     private String content;
-    private String author;
+    private Member member;
 
     public PostResponseDto(Posts entity) {
-        this.postId = entity.getPostId();
+        this.postId = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.author = entity.getAuthor();
+        this.member = entity.getMember();
     }
 }

@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -13,6 +12,18 @@
     </div>
 
     <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='loginForm.html'"
+                    th:onclick="|location.href='@{/login}'|"
+                    type="button">로그인</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='signupForm.html'"
+                    th:onclick="|location.href='@{/signup}'|"
+                    type="button">회원가입</button>
+        </div>
         <div class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='addPost.html'"
@@ -34,10 +45,10 @@
             </thead>
             <tbody>
             <tr th:each="post : ${posts}">
-                <td><a href="posts/post.html" th:href="@{/posts/{postId}(postId=${post.postId})}" th:text="${post.postId}">글 번호</a></td>
-                <td th:text="${post.author}">작성자</td>
-                <td><a href="posts/post.html" th:href="@{|/posts/${post.postId}|}" th:text="${post.title}">제목</a></td>
-                <td th:text="${post.createdAt}">오늘</td>
+                <td><a href="posts/post.html" th:href="@{/posts/{id}(id=${post.getId})}" th:text="${post.getId}">글 번호</a></td>
+                <td><a href="posts/post.html" th:href="@{/member/{id}(id=${post.getMember().getId()})}" th:text="${post.member.getNickname()}">작성자</a></td>
+                <td><a href="posts/post.html" th:href="@{|/posts/${post.getId}|}" th:text="${post.title}">제목</a></td>
+                <td th:text="${#temporals.format(post.createdAt, 'MM-dd HH:mm:ss')}">오늘</td>
             </tr>
             </tbody>
         </table>

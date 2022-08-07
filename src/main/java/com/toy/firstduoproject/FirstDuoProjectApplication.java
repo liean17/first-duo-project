@@ -1,6 +1,7 @@
 package com.toy.firstduoproject;
 
-import com.toy.firstduoproject.domain.post.PostRepository;
+import com.toy.firstduoproject.repository.MemberRepository;
+import com.toy.firstduoproject.repository.PostRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,5 +14,5 @@ public class FirstDuoProjectApplication {
     }
 
     @Bean
-    public TestDataInit dataInit(PostRepository postRepository){return new TestDataInit(postRepository);}
+    public TestDataInit dataInit(MemberRepository memberRepository, PostRepository postRepository){return new TestDataInit(postRepository, memberRepository);}
 }

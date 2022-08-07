@@ -1,10 +1,12 @@
 package com.toy.firstduoproject.service;
 
-import com.toy.firstduoproject.domain.post.PostRepository;
-import com.toy.firstduoproject.domain.post.Posts;
-import com.toy.firstduoproject.service.web.dto.PostSaveRequestDto;
-import com.toy.firstduoproject.service.web.dto.PostUpdateRequestDto;
+import com.toy.firstduoproject.domain.entity.Member;
+import com.toy.firstduoproject.repository.PostRepository;
+import com.toy.firstduoproject.domain.entity.Posts;
+import com.toy.firstduoproject.service.dto.PostSaveRequestDto;
+import com.toy.firstduoproject.service.dto.PostUpdateRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class PostService {
     private PostRepository postRepository;
 
     //C
-    public Posts create(PostSaveRequestDto requestDto){
-        return postRepository.save(requestDto.toEntity());
+    public void createPost(PostSaveRequestDto requestDto){
+        postRepository.save(requestDto.toEntity());
     }
 
     //R
@@ -27,11 +29,15 @@ public class PostService {
 
     //Rs
     public List<Posts> findAll(){
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    }
+
+    public List<Posts> findAllByMember(Member member) {
+        return postRepository.findAllByMemberOrderByIdDesc(member);
     }
 
     //U
-    public void update(Long postId, PostUpdateRequestDto requestDto){
+    public void updatePost(Long postId, PostUpdateRequestDto requestDto){
         Posts post = postRepository.findById(postId).orElseThrow();
 
         String title = requestDto.getTitle();

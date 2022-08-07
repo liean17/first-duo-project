@@ -1,13 +1,10 @@
-package com.toy.firstduoproject.domain.post;
+package com.toy.firstduoproject.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,21 +13,31 @@ import java.time.LocalDateTime;
 public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String content;
-    private String author;
+//    private String author;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
-    public Posts(String title, String author, String content) {
+    public Posts(String title, Member member,String content) {
         this.title = title;
-        this.author = author;
         this.content = content;
+        this.member = member;
     }
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
+
 }

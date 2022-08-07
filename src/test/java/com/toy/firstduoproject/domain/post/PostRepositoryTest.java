@@ -1,12 +1,11 @@
 package com.toy.firstduoproject.domain.post;
 
-import org.assertj.core.api.Assertions;
+import com.toy.firstduoproject.domain.entity.Posts;
+import com.toy.firstduoproject.repository.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;

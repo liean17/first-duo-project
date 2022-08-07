@@ -1,4 +1,4 @@
-package com.toy.firstduoproject.service.web.dto;
+package com.toy.firstduoproject.service.dto;
 
 import lombok.Builder;
 import lombok.Getter;
