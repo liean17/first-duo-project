@@ -4,7 +4,6 @@ import com.toy.firstduoproject.domain.entity.Member;
 import com.toy.firstduoproject.domain.entity.Posts;
 import com.toy.firstduoproject.service.MemberService;
 import com.toy.firstduoproject.service.PostService;
-import com.toy.firstduoproject.service.dto.MemberLoginDto;
 import com.toy.firstduoproject.service.dto.MemberSaveRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,7 +29,7 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public String signup(@ModelAttribute MemberSaveRequestDto memberSaveRequestDto) {
+    public String signup(@Valid MemberSaveRequestDto memberSaveRequestDto) {
         memberService.createMember(memberSaveRequestDto);
         return "redirect:/login";
     }
@@ -39,11 +39,6 @@ public class MemberController {
         return "loginForm";
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute MemberLoginDto memberLoginDto) {
-        memberService.verifyMember(memberLoginDto);
-        return "redirect:/posts";
-    }
 
     @GetMapping("/member/{member-id}")
     public String getMember(@PathVariable("member-id") Long memberId, Model model) {

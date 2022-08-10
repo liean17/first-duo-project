@@ -30,17 +30,20 @@ public class Member {
 
     private String email;
 
+    private String role;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Posts> posts = new ArrayList<>();
 
     @Builder
-    public Member(String username, String password, String nickname, String email) {
+    public Member(String username, String password, String nickname, String email,String role) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
+        this.role = role;
     }
 
 }

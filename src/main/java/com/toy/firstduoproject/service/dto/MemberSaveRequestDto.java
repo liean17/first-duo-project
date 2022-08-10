@@ -3,6 +3,9 @@ package com.toy.firstduoproject.service.dto;
 import com.toy.firstduoproject.domain.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +14,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 public class MemberSaveRequestDto {
+
     @NotBlank
     @Size(min = 2)
     private String username;
@@ -36,6 +40,7 @@ public class MemberSaveRequestDto {
                 .password(password)
                 .nickname(nickname)
                 .email(email)
+                .role("ROLE_USER")
                 .build();
     }
 }
