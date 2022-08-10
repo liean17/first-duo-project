@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -12,19 +12,19 @@
     </div>
 
     <div class="row">
-        <div class="col">
+        <div sec:authorize="!isAuthenticated()" class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='loginForm.html'"
                     th:onclick="|location.href='@{/login}'|"
                     type="button">로그인</button>
         </div>
-        <div class="col">
+        <div sec:authorize="!isAuthenticated()" class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='signupForm.html'"
                     th:onclick="|location.href='@{/signup}'|"
                     type="button">회원가입</button>
         </div>
-        <div class="col">
+        <div sec:authorize="isAuthenticated()" class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='addPost.html'"
                     th:onclick="|location.href='@{/posts/add}'|"

@@ -18,8 +18,8 @@ public class PostService {
     private PostRepository postRepository;
 
     //C
-    public void createPost(PostSaveRequestDto requestDto){
-        postRepository.save(requestDto.toEntity());
+    public Posts createPost(PostSaveRequestDto requestDto){
+        return postRepository.save(requestDto.toEntity());
     }
 
     //R
@@ -38,6 +38,8 @@ public class PostService {
 
     //U
     public void updatePost(Long postId, PostUpdateRequestDto requestDto){
+
+
         Posts post = postRepository.findById(postId).orElseThrow();
 
         String title = requestDto.getTitle();

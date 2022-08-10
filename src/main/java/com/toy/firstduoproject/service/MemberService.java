@@ -1,16 +1,15 @@
 package com.toy.firstduoproject.service;
 
 import com.toy.firstduoproject.domain.entity.Member;
-import com.toy.firstduoproject.domain.entity.Posts;
+import com.toy.firstduoproject.handler.ex.ExistException;
 import com.toy.firstduoproject.repository.MemberRepository;
-import com.toy.firstduoproject.repository.PostRepository;
-import com.toy.firstduoproject.service.dto.MemberLoginDto;
 import com.toy.firstduoproject.service.dto.MemberSaveRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import javax.validation.ConstraintViolationException;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class MemberService {
@@ -18,23 +17,23 @@ public class MemberService {
     private MemberRepository memberRepository;
 
     @Autowired
-    private PostRepository postRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void createMember(MemberSaveRequestDto memberSaveRequestDto) {
-        memberRepository.save(memberSaveRequestDto.toEntity());
-    }
+        String username = memberSaveRequestDto.getUsername();
 
-    public Member verifyMember(MemberLoginDto memberLoginDto){
-        String username = memberLoginDto.getUsername();
-        String password = memberLoginDto.getPassword();
-        Member member = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-
-        if(!member.getPassword().equals(password)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        try {
+            MemberSaveRequestDto requestDto =
+                    new MemberSaveRequestDto(memberSaveRequestDto.getUsername(),
+                            bCryptPasswordEncoder.encode(memberSaveRequestDto.getPassword()),
+                            memberSaveRequestDto.getNickname(),
+                            memberSaveRequestDto.getEmail());
+            memberRepository.save(requestDto.toEntity());
+        }catch (RuntimeException e){
+            throw new ExistException("중복오류입니다.");
         }
 
-        return member;
+
     }
 
     public Member findMember(Long memberId) {
