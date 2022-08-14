@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2 th:text="${memberInfo.nickname}">회원 이름</h2>
+    </div>
+
+<!--    인증 안 됐으면-->
+    <div sec:authorize="!isAuthenticated()" class="row">
+        <div class="col">
+            <button class="btn btn-primary"
+                    onclick="location.href='loginForm.html'"
+                    th:onclick="|location.href='@{/login}'|"
+                    type="button">로그인
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='signupForm.html'"
+                    th:onclick="|location.href='@{/signup}'|"
+                    type="button">회원가입
+            </button>
+        </div>
+    </div>
+
+<!--    인증 됐으면-->
+    <div sec:authorize="isAuthenticated()" class="row">
+        <div class="col">
+            <button class="btn btn-primary"
+                    onclick="location.href='logout.html'"
+                    th:onclick="|location.href='@{/logout}'|"
+                    type="button">로그아웃
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary"
+                    onclick="location.href='editMember.html'"
+                    th:onclick="|location.href='@{/member/edit/{memberId}(memberId=${memberInfo.getId})}'|"
+                    type="button">정보 수정
+            </button>
+        </div>
+        <div class="col">
+            <form sec:authorize="isAuthenticated()" th:method="post">
+                <button class="btn btn-primary float-end" style="background-color: crimson"
+                        type="submit">회원 탈퇴
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <div>
+        <label for="username">아이디</label>
+        <input type="text" id="username" name="username" class="form-control" value="아이디"
+               th:value="${memberInfo.getUsername()}" readonly>
+    </div>
+    <div>
+        <label for="nickname">닉네임</label>
+        <input type="text" id="nickname" name="nickname" class="form-control" value="닉네임"
+               th:value="${memberInfo.getNickname()}"
+               readonly>
+    </div>
+    <div>
+        <label for="email">이메일</label>
+        <input type="text" id="email" name="email" class="form-control" value="이메일" th:value="${memberInfo.getEmail()}"
+               readonly>
+    </div>
+    <div>
+        <label for="createdAt">가입한 날짜</label>
+        <input type="text" id="createdAt" name="createdAt" class="form-control" value="가입 날짜"
+               th:value="${#temporals.format(memberInfo.getCreatedAt(), 'MM-dd HH:mm:ss')}" readonly>
+    </div>
+
+    <div>
+        <label>쓴 글 목록</label>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{label.posts.id}">글 번호</th>
+                <th th:text="#{label.posts.author}">글쓴이</th>
+                <th th:text="#{label.posts.title}">제목</th>
+                <th th:text="#{label.posts.tag}">태그</th>
+                <th th:text="#{label.posts.time}">날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${memberInfo.getPosts()}">
+                <td><a href="../posts/post.html" th:href="@{/posts/{id}(id=${post.getId})}" th:text="${post.getId}">글
+                    번호</a></td>
+                <td><a href="../posts/post.html" th:href="@{/member/{id}(id=${post.getMember().getId()})}"
+                       th:text="${post.member.getNickname()}">작성자</a></td>
+                <td><a href="../posts/post.html" th:href="@{|/posts/${post.getId}|}" th:text="${post.title}">제목</a></td>
+                <td><a href="../posts/post.html" th:href="@{|/posts/${post.getPostTags()}|}" th:text="${post.postTags}">태그</a>
+                </td>
+                <td th:text="${#temporals.format(post.createdAt, 'MM-dd HH:mm:ss')}">오늘</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-4">
+
+        <div class="row">
+<!--            <div class="col">-->
+<!--                <button class="w-100 btn btn-primary btn-lg"-->
+<!--                        onclick="location.href='editPost.html'"-->
+<!--                        th:onclick="|location.href='@{/posts/edit/{postId}(postId=${post.getId})}'|"-->
+<!--                        type="button">글 수정-->
+<!--                </button>-->
+<!--            </div>-->
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='posts.html'"
+                        th:onclick="|location.href='@{/}'|"
+                        type="button">홈으로
+                </button>
+            </div>
+        </div>
+
+</div> <!-- /container -->
+</body>
+</html>

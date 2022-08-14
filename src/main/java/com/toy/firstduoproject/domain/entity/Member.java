@@ -3,10 +3,9 @@ package com.toy.firstduoproject.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class Member {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Posts> posts = new ArrayList<>();
 
     @Builder
@@ -45,5 +44,4 @@ public class Member {
         this.email = email;
         this.role = role;
     }
-
 }

@@ -34,13 +34,13 @@ public class MemberSaveRequestDto {
         this.email = email;
     }
 
-    public Member toEntity() {
-        return Member.builder()
-                .username(username)
-                .password(password)
-                .nickname(nickname)
-                .email(email)
-                .role("ROLE_USER")
-                .build();
-    }
+//    public Member toEntity() {
+//        return Member.builder()
+//                .username(username)
+//                .password(password)
+//                .nickname(nickname)
+//                .email(email)
+//                .role("ROLE_USER")
+//                .build();
+//    }
 }

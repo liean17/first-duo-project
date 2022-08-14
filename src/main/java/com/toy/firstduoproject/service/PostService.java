@@ -5,25 +5,30 @@ import com.toy.firstduoproject.repository.PostRepository;
 import com.toy.firstduoproject.domain.entity.Posts;
 import com.toy.firstduoproject.service.dto.PostSaveRequestDto;
 import com.toy.firstduoproject.service.dto.PostUpdateRequestDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
-
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
     //C
-    public Posts createPost(PostSaveRequestDto requestDto){
-        return postRepository.save(requestDto.toEntity());
+    public Posts createPost(PostSaveRequestDto requestDto, Member member){
+        Posts post = Posts.builder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .member(member)
+                .build();
+
+        return postRepository.save(post);
     }
 
     //R
-    public Posts findById(Long postId){
+    public Posts findPostById(Long postId){
         return postRepository.findById(postId).orElseThrow(()->new IllegalArgumentException("글이 존재하지 않습니다."));
     }
 
@@ -54,5 +59,4 @@ public class PostService {
     public void deletePost(Long postId){
         postRepository.deleteById(postId);
     }
-
 }
