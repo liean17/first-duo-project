@@ -7,15 +7,21 @@ import com.toy.firstduoproject.handler.ex.NoPermissionException;
 import com.toy.firstduoproject.service.PostService;
 import com.toy.firstduoproject.service.dto.PostSaveRequestDto;
 import com.toy.firstduoproject.service.dto.PostUpdateRequestDto;
+import com.toy.firstduoproject.service.file.FileStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +29,7 @@ import java.util.Objects;
 @Controller
 public class PostController {
     private final PostService postService;
+    private final FileStore fileStore;
 
     @GetMapping("/posts/add")
     public String addForm() {
@@ -31,7 +38,7 @@ public class PostController {
 
     @PostMapping("/posts/add")
     public String createPost(@Valid PostSaveRequestDto requestDto,
-                             @AuthenticationPrincipal PrincipalDetails principalDetails) {
+                             @AuthenticationPrincipal PrincipalDetails principalDetails) throws IOException {
         Member member = principalDetails.getMember();
         Posts post = postService.createPost(requestDto, member);
         return "redirect:/posts/" + post.getId();
@@ -74,10 +81,16 @@ public class PostController {
     public String deletePost(@PathVariable("post-id") Long postId,
                              @AuthenticationPrincipal PrincipalDetails principalDetails) {
         Posts post = postService.findPostById(postId);
-        if (!Objects.equals(post.getMember().getId(), principalDetails.getMember().getId()) || !principalDetails.getMember().getRole().equals("ROLE_ADMIN")) {
-            throw new NoPermissionException("글을 삭제할 권한이 없습니다.");
+        if (Objects.equals(post.getMember().getId(), principalDetails.getMember().getId()) || principalDetails.getMember().getRole().equals("ROLE_ADMIN")) {
+            postService.deletePost(postId);
+            return "redirect:/posts";
         }
-        postService.deletePost(postId);
-        return "redirect:/posts";
+        throw new NoPermissionException("글을 삭제할 권한이 없습니다.");
+    }
+
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource showImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
 }

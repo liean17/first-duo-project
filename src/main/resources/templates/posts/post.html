@@ -48,6 +48,10 @@
         <input type="text" id="content" name="content" class="form-control" value="내용" th:value="${post.content}"
                readonly>
     </div>
+    <div>
+        <div>사진</div>
+        <img th:if="${post.getStoreFilename()}" th:src="|/images/${post.getStoreFilename()}|" width="500" height="500" />
+    </div>
 
     <hr class="my-4">
 

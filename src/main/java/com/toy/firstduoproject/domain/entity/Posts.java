@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -27,13 +25,16 @@ public class Posts {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    private String storeFilename;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
-    public Posts(String title, Member member,String content) {
+    public Posts(String title, Member member,String content, String storeFilename) {
         this.title = title;
         this.content = content;
         this.member = member;
+        this.storeFilename = storeFilename;
     }
 
     public void update(String title, String content) {

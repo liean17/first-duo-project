@@ -1,6 +1,7 @@
 package com.toy.firstduoproject.service.dto;
 
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -12,9 +13,12 @@ public class PostSaveRequestDto {
     @NotBlank
     private String content;
 
-    public PostSaveRequestDto(String title, String content) {
+    private MultipartFile attachFile;
+
+    public PostSaveRequestDto(String title, String content, MultipartFile attachFile) {
         this.title = title;
         this.content = content;
+        this.attachFile = attachFile;
     }
 
     //    public Posts toEntity() {

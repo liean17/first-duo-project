@@ -31,17 +31,26 @@ public class Member {
 
     private String role;
 
+    private String storeFilename;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Posts> posts = new ArrayList<>();
 
     @Builder
-    public Member(String username, String password, String nickname, String email,String role) {
+    public Member(String username, String password, String nickname, String email,String role, String storeFilename) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
         this.role = role;
+        this.storeFilename = storeFilename;
+    }
+
+    public void update(String nickname, String email, String storeFilename) {
+        this.nickname = nickname;
+        this.email = email;
+        this.storeFilename = storeFilename;
     }
 }

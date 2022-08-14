@@ -60,7 +60,10 @@
         </div>
     </div>
 
-
+    <div>
+        <div>프로필 이미지</div>
+        <img th:if="${memberInfo.getStoreFilename()}" th:src="|/images/${memberInfo.getStoreFilename()}|" width="500" height="500" />
+    </div>
     <div>
         <label for="username">아이디</label>
         <input type="text" id="username" name="username" class="form-control" value="아이디"
