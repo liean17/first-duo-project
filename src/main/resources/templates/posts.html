@@ -55,7 +55,6 @@
                 <td><a href="posts/post.html" th:href="@{/posts/{id}(id=${post.getId})}" th:text="${post.getId}">글 번호</a></td>
                 <td><a href="posts/post.html" th:href="@{/member/{id}(id=${post.getMember().getId()})}" th:text="${post.member.getNickname()}">작성자</a></td>
                 <td><a href="posts/post.html" th:href="@{|/posts/${post.getId}|}" th:text="${post.title}">제목</a></td>
-                <td><a href="posts/post.html" th:href="@{|/posts/${post.getPostTags()}|}" th:text="${post.postTags}">태그</a></td>
                 <td th:text="${#temporals.format(post.createdAt, 'MM-dd HH:mm:ss')}">오늘</td>
             </tr>
             </tbody>

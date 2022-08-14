@@ -1,12 +1,9 @@
 package com.toy.firstduoproject.domain.post;
 
 import com.toy.firstduoproject.domain.entity.Member;
-import com.toy.firstduoproject.domain.entity.PostTag;
 import com.toy.firstduoproject.domain.entity.Posts;
-import com.toy.firstduoproject.domain.entity.Tags;
 import com.toy.firstduoproject.repository.MemberRepository;
 import com.toy.firstduoproject.repository.PostRepository;
-import com.toy.firstduoproject.repository.TagRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

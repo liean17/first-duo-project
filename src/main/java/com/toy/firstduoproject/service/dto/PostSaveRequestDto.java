@@ -12,13 +12,12 @@ public class PostSaveRequestDto {
     @NotBlank
     private String content;
 
-
     public PostSaveRequestDto(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
-//    public Posts toEntity() {
+    //    public Posts toEntity() {
 //        return Posts.builder()
 //                .title(title)
 //                .content(content)
