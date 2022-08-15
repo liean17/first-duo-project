@@ -23,7 +23,7 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final FileStore fileStore;
 
-    public void createMember(MemberSaveRequestDto memberSaveRequestDto) {
+    public Long createMember(MemberSaveRequestDto memberSaveRequestDto) {
         isExistMember(memberSaveRequestDto.getUsername());
 
         Member member = Member.builder()
@@ -34,7 +34,8 @@ public class MemberService {
                 .role("ROLE_USER")
                 .build();
 
-        memberRepository.save(member);
+        Member savedMember = memberRepository.save(member);
+        return savedMember.getId();
     }
 
     public Member findMember(Long memberId) {
@@ -42,11 +43,12 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다.") );
     }
 
-    public void updateMember(Long memberId, MemberUpdateDto memberUpdateDto) throws IOException {
+    public Long updateMember(Long memberId, MemberUpdateDto memberUpdateDto) throws IOException {
         String storeFilename = fileStore.storeFile(memberUpdateDto.getProfileImage());
         Member member = memberRepository.findById(memberId).orElseThrow();
         member.update(memberUpdateDto.getNickname(), memberUpdateDto.getEmail(), storeFilename);
-        memberRepository.save(member);
+        Member save = memberRepository.save(member);
+        return save.getId();
     }
 
 

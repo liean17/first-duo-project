@@ -6,17 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class PostResponseDto {
     private Long postId;
     private String title;
     private String content;
-    private Member member;
+    private String nickname;
 
     public PostResponseDto(Posts entity) {
         this.postId = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.member = entity.getMember();
+        this.nickname = entity.getMember().getNickname();
     }
 }
