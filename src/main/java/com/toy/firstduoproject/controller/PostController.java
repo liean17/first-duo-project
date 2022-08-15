@@ -52,7 +52,11 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public String getPosts(Model model) {
+    public String getPosts(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        if(principalDetails!=null){
+            String nickname = principalDetails.getMember().getNickname();
+            model.addAttribute("nickname",nickname);
+        }
         List<Posts> posts = postService.findAll();
         model.addAttribute("posts", posts);
         return "posts";
@@ -93,4 +97,6 @@ public class PostController {
     public Resource showImage(@PathVariable String filename) throws MalformedURLException {
         return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
+
+
 }

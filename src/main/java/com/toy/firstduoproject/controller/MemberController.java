@@ -13,10 +13,8 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -30,12 +28,15 @@ public class MemberController {
     private final FileStore fileStore;
 
     @GetMapping("/signup")
-    public String signupForm() {
+    public String signupForm(@ModelAttribute("member") MemberSaveRequestDto memberSaveRequestDto) {
         return "signupForm";
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid MemberSaveRequestDto memberSaveRequestDto) {
+    public String signup(@ModelAttribute("member") @Valid MemberSaveRequestDto memberSaveRequestDto, BindingResult result) {
+        if(result.hasErrors()){
+            return "signupForm";
+        }
         memberService.createMember(memberSaveRequestDto);
         return "redirect:/login";
     }
@@ -85,10 +86,4 @@ public class MemberController {
         memberService.deleteMember(memberId);
         return "redirect:/posts";
     }
-
-//    @ResponseBody
-//    @GetMapping("/images/{filename}")
-//    public Resource showImage(@PathVariable String filename) throws MalformedURLException {
-//        return new UrlResource("file:" + fileStore.getFullPath(filename));
-//    }
 }

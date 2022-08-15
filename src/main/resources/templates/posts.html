@@ -9,6 +9,9 @@
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
         <h2>자유 게시판</h2>
+        <div sec:authorize="isAuthenticated()" >
+            <a th:text="'환영합니다! '+${nickname}+'님'" ></a>
+        </div>
     </div>
 
     <div class="row">
@@ -46,7 +49,6 @@
                 <th th:text="#{label.posts.id}">글 번호</th>
                 <th th:text="#{label.posts.author}">글쓴이</th>
                 <th th:text="#{label.posts.title}">제목</th>
-                <th th:text="#{label.posts.tag}">태그</th>
                 <th th:text="#{label.posts.time}">날짜</th>
             </tr>
             </thead>

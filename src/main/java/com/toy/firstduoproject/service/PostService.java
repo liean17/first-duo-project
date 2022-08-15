@@ -44,10 +44,6 @@ public class PostService {
         return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
-    public List<Posts> findAllByMember(Member member) {
-        return postRepository.findAllByMemberOrderByIdDesc(member);
-    }
-
     //U
     public void updatePost(Long postId, PostUpdateRequestDto requestDto){
 
