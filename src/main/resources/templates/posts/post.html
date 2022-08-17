@@ -34,6 +34,11 @@
         <input type="text" id="id" name="id" class="form-control" value="1" th:value="${post.getId}" readonly>
     </div>
     <div>
+        <label for="postType">분류</label>
+        <input type="text" id="postType" name="postType" class="form-control" value="분류" th:value="${post.postType.type}"
+               readonly>
+    </div>
+    <div>
         <label for="member">작성자</label>
         <input type="text" id="member" name="member" class="form-control" value="작성자" th:value="${post.member.getNickname()}"
                readonly>

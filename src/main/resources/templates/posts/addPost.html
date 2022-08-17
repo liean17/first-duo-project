@@ -19,7 +19,15 @@
                    placeholder="제목을 입력하세요"></label>
         </div>
 
-
+        <div>
+            <div>분류</div>
+            <label>
+                <select th:field="*{postTypes}" class="form-select">
+                    <option th:each="postType : ${postTypes}" th:value="${postType.type}"
+                            th:text="${postType.type}">CHAT</option>
+                </select>
+            </label>
+        </div>
         <div>
             <label for="content">내용</label>
             <input type="text" id="content" name="content" class="form-control" placeholder="내용을 입력하세요">

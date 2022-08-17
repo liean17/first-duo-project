@@ -2,6 +2,7 @@ package com.toy.firstduoproject.controller;
 
 import com.toy.firstduoproject.config.auth.PrincipalDetails;
 import com.toy.firstduoproject.domain.entity.Member;
+import com.toy.firstduoproject.domain.entity.PostType;
 import com.toy.firstduoproject.domain.entity.Posts;
 import com.toy.firstduoproject.handler.ex.NoPermissionException;
 import com.toy.firstduoproject.service.PostService;
@@ -11,25 +12,34 @@ import com.toy.firstduoproject.service.file.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
 public class PostController {
     private final PostService postService;
     private final FileStore fileStore;
+
+    @ModelAttribute("postTypes")
+    public PostType[] postType() {
+        return Arrays.stream(PostType.values())
+                .filter(postType -> !postType.equals(PostType.NOTICE))
+                .toArray(PostType[]::new);
+    }
 
     @GetMapping("/posts/add")
     public String addForm() {
@@ -52,12 +62,14 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public String getPosts(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public String getPosts(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails,
+                           Pageable pageable,
+                           @RequestParam(value = "postType", defaultValue = "") PostType postType) {
         if(principalDetails!=null){
             String nickname = principalDetails.getMember().getNickname();
             model.addAttribute("nickname",nickname);
         }
-        List<Posts> posts = postService.findAll();
+        Page<Posts> posts = postService.findAll(pageable);
         model.addAttribute("posts", posts);
         return "posts";
     }

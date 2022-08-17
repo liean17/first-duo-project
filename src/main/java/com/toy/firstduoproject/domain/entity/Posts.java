@@ -27,18 +27,25 @@ public class Posts {
 
     private String storeFilename;
 
+    private PostType postType;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
-    public Posts(String title, Member member,String content, String storeFilename) {
+    public Posts(String title, Member member,String content, String storeFilename, PostType postType) {
         this.title = title;
         this.content = content;
         this.member = member;
         this.storeFilename = storeFilename;
+        this.postType = postType;
     }
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void changePostType(PostType postType) {
+        this.postType = postType;
     }
 }

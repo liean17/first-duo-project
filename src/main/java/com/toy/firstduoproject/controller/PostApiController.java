@@ -37,17 +37,17 @@ public class PostApiController {
         return new PostResponseDto(post);
     }
 
-    @GetMapping("/api/posts")
-    public List<PostResponseDto> getPosts() {
-
-        List<Posts> posts = postService.findAll();
-        List<PostResponseDto> postResponseDtos = new ArrayList<>();
-        for (Posts post : posts) {
-            PostResponseDto responseDto = new PostResponseDto(post);
-            postResponseDtos.add(responseDto);
-        }
-        return postResponseDtos;
-    }
+//    @GetMapping("/api/posts")
+//    public List<PostResponseDto> getPosts() {
+//
+//        List<Posts> posts = postService.findAll();
+//        List<PostResponseDto> postResponseDtos = new ArrayList<>();
+//        for (Posts post : posts) {
+//            PostResponseDto responseDto = new PostResponseDto(post);
+//            postResponseDtos.add(responseDto);
+//        }
+//        return postResponseDtos;
+//    }
 
     @PutMapping("/api/posts/edit/{post-id}")
     public Long patchPost(@PathVariable("post-id") Long postId,

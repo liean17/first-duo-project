@@ -1,18 +1,18 @@
 package com.toy.firstduoproject.service;
 
-import com.toy.firstduoproject.domain.entity.Member;
-import com.toy.firstduoproject.domain.entity.UploadFile;
+import com.toy.firstduoproject.domain.entity.*;
 import com.toy.firstduoproject.repository.PostRepository;
-import com.toy.firstduoproject.domain.entity.Posts;
 import com.toy.firstduoproject.service.dto.PostSaveRequestDto;
 import com.toy.firstduoproject.service.dto.PostUpdateRequestDto;
 import com.toy.firstduoproject.service.file.FileStore;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +23,12 @@ public class PostService {
     //C
     public Posts createPost(PostSaveRequestDto requestDto, Member member) throws IOException {
         String storeFilename = fileStore.storeFile(requestDto.getAttachFile());
-
         Posts post = Posts.builder()
                 .title(requestDto.getTitle())
                 .content(requestDto.getContent())
                 .member(member)
                 .storeFilename(storeFilename)
+                .postType(requestDto.getPostType())
                 .build();
 
         return postRepository.save(post);
@@ -40,20 +40,21 @@ public class PostService {
     }
 
     //Rs
-    public List<Posts> findAll(){
-        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    public Page<Posts> findAll(Pageable pageable){
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, pageable.getPageSize(), Sort.Direction.DESC, "id"); // <- Sort 추가
+        return postRepository.findAll(pageable);
     }
 
     //U
     public void updatePost(Long postId, PostUpdateRequestDto requestDto){
-
-
         Posts post = postRepository.findById(postId).orElseThrow();
 
         String title = requestDto.getTitle();
         String content = requestDto.getContent();
 
         post.update(title,content);
+        post.changePostType(requestDto.getPostType());
         postRepository.save(post);
         //return post;
     }
