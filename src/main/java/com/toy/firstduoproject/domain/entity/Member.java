@@ -3,7 +3,6 @@ package com.toy.firstduoproject.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,6 +36,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Posts> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Comments> comments = new ArrayList<>();
 
     @Builder
     public Member(String username, String password, String nickname, String email,String role, String storeFilename) {

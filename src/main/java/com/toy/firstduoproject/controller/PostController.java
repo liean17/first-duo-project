@@ -57,6 +57,8 @@ public class PostController {
     @GetMapping("/posts/{post-id}")
     public String getPost(@PathVariable("post-id") Long postId, Model model) {
         Posts post = postService.findPostById(postId);
+        //포스트에서 댓글 따로 빼서 넘기기?
+
         model.addAttribute("post", post);
         return "posts/post";
     }
