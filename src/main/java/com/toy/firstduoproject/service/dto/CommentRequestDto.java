@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class CommentRequestDto {
 
     //내용
@@ -29,4 +27,7 @@ public class CommentRequestDto {
     //멤버?
     private Member member;
 
+    public CommentRequestDto(String comment) {
+        this.comment = comment;
+    }
 }
