@@ -60,6 +60,51 @@
 
     <hr class="my-4">
 
+    <form th:action="@{/posts/{id}/comment/write/(id=${post.id})}" th:method="post">
+
+    <div class="card mb-2 mt-5">
+        <div class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> 댓글
+        </div>
+
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <textarea class="form-control" type="text" id="comment" name="comment" rows="1"></textarea>
+                    <button type="submit" class="btn btn-dark mt-3">등록</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    </form>
+
+    <div class="card">
+        <div class="card-header">댓글</div>
+
+        <ul id="reply--box" class="list-group">
+
+        <tr th:each="comments : ${post.comments}">
+            <li id="reply--1" class="list-group-item d-flex justify-content-between">
+                <div class="d-flex">
+                    <td><a th:text="${comments.id}">댓글 번호</a></td>
+
+                    <td><a th:text="${comments.comment}">정말 멋진 내용이에요</a></td>
+
+                    <div class="text-monospace" th:text="${comments.member.nickname}">작성자 : 좋은생각</div>
+
+                    <td><a th:text="${comments.createdDate}">날짜</a></td>
+
+                    <button class="badge btn-warning">수정</button><span>  </span>
+                    <button class="badge btn-danger">삭제</button>
+                </div>
+            </li>
+        </tr>
+
+        </ul>
+    </div>
+
+    <br/>
     <div class="row">
         <div class="col">
             <button class="w-100 btn btn-primary btn-lg"

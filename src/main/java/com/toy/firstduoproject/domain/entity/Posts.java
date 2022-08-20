@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -31,13 +32,19 @@ public class Posts {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    //List 타입의 댓글
+    @OneToMany(mappedBy = "posts",cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    private List<Comments> comments;
+
     @Builder
-    public Posts(String title, Member member,String content, String storeFilename, PostType postType) {
+    public Posts(String title, Member member,String content, String storeFilename, PostType postType, List<Comments> comments) {
         this.title = title;
         this.content = content;
         this.member = member;
         this.storeFilename = storeFilename;
         this.postType = postType;
+        this.comments = comments;
     }
 
     public void update(String title, String content) {
