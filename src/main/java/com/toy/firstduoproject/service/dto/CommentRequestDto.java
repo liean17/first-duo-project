@@ -21,6 +21,8 @@ public class CommentRequestDto {
     //날짜
     private String createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 
+    private Comments parent;
+
     //포스트?
     private Posts posts;
 

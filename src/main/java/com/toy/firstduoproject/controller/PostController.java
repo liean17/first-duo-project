@@ -1,6 +1,7 @@
 package com.toy.firstduoproject.controller;
 
 import com.toy.firstduoproject.config.auth.PrincipalDetails;
+import com.toy.firstduoproject.domain.entity.Comments;
 import com.toy.firstduoproject.domain.entity.Member;
 import com.toy.firstduoproject.domain.entity.PostType;
 import com.toy.firstduoproject.domain.entity.Posts;
@@ -58,8 +59,9 @@ public class PostController {
     public String getPost(@PathVariable("post-id") Long postId, Model model) {
         Posts post = postService.findPostById(postId);
         //포스트에서 댓글 따로 빼서 넘기기?
-
+        List<Comments> comments = post.getComments();
         model.addAttribute("post", post);
+        model.addAttribute("comments", comments);
         return "posts/post";
     }
 

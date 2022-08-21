@@ -21,7 +21,8 @@
         <div class="row">
             <div class="col">
                 <button class="btn btn-primary float-end" style="background-color: crimson"
-                        type="submit">삭제</button>
+                        type="submit">삭제
+                </button>
             </div>
         </div>
     </form>
@@ -35,12 +36,14 @@
     </div>
     <div>
         <label for="postType">분류</label>
-        <input type="text" id="postType" name="postType" class="form-control" value="분류" th:value="${post.postType.type}"
+        <input type="text" id="postType" name="postType" class="form-control" value="분류"
+               th:value="${post.postType.type}"
                readonly>
     </div>
     <div>
         <label for="member">작성자</label>
-        <input type="text" id="member" name="member" class="form-control" value="작성자" th:value="${post.member.getNickname()}"
+        <input type="text" id="member" name="member" class="form-control" value="작성자"
+               th:value="${post.member.getNickname()}"
                readonly>
     </div>
     <div>
@@ -55,27 +58,27 @@
     </div>
     <div>
         <div>사진</div>
-        <img th:if="${post.getStoreFilename()}" th:src="|/images/${post.getStoreFilename()}|" width="500" height="500" />
+        <img th:if="${post.getStoreFilename()}" th:src="|/images/${post.getStoreFilename()}|" width="500" height="500"/>
     </div>
 
     <hr class="my-4">
 
     <form th:action="@{/posts/{id}/comment/write/(id=${post.id})}" th:method="post">
 
-    <div class="card mb-2 mt-5">
-        <div class="card-header bg-light">
-            <i class="fa fa-comment fa"></i> 댓글
-        </div>
+        <div class="card mb-2 mt-5">
+            <div class="card-header bg-light">
+                <i class="fa fa-comment fa"></i> 댓글
+            </div>
 
-        <div class="card-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <textarea class="form-control" type="text" id="comment" name="comment" rows="1"></textarea>
-                    <button type="submit" class="btn btn-dark mt-3">등록</button>
-                </li>
-            </ul>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <textarea class="form-control" type="text" id="comment" name="comment" rows="1"></textarea>
+                        <button type="submit" class="btn btn-dark mt-3">등록</button>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
     </form>
 
@@ -84,22 +87,30 @@
 
         <ul id="reply--box" class="list-group">
 
-        <tr th:each="comments : ${post.comments}">
-            <li id="reply--1" class="list-group-item d-flex justify-content-between">
-                <div class="d-flex">
-                    <td><a th:text="${comments.id}">댓글 번호</a></td>
+            <tr th:each="comment : ${comments}">
+                <li id="reply--1" class="list-group-item d-flex justify-content-between">
+                    <div class="d-flex">
+                        <td><a th:text="${comment.id}">댓글 번호</a></td>
 
-                    <td><a th:text="${comments.comment}">정말 멋진 내용이에요</a></td>
+                        <td><a th:text="${comment.comment}">정말 멋진 내용이에요</a></td>
 
-                    <div class="text-monospace" th:text="${comments.member.nickname}">작성자 : 좋은생각</div>
+                        <div class="text-monospace" th:text="${comment.member.nickname}">작성자 : 좋은생각</div>
 
-                    <td><a th:text="${comments.createdDate}">날짜</a></td>
+                        <td><a th:text="${comment.createdDate}">날짜</a></td>
 
-                    <button class="badge btn-warning">수정</button><span>  </span>
-                    <button class="badge btn-danger">삭제</button>
-                </div>
-            </li>
-        </tr>
+                        <form th:action="@{/posts/{id}/comment/{commentId}/(id=${post.id},commentId=${comment.id})}"
+                              th:method="post">
+                            <label for="reComment">답글</label>
+                            <textarea class="form-control" type="text" id="reComment" name="comment"
+                                      rows="1"></textarea>
+                            <button type="submit" class="btn btn-dark mt-3">등록</button>
+                        </form>
+                        <button class="badge btn-warning">수정</button>
+                        <span>  </span>
+                        <button class="badge btn-danger">삭제</button>
+                    </div>
+                </li>
+            </tr>
 
         </ul>
     </div>

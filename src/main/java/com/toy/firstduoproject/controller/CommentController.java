@@ -1,7 +1,6 @@
 package com.toy.firstduoproject.controller;
 
 import com.toy.firstduoproject.config.auth.PrincipalDetails;
-import com.toy.firstduoproject.repository.CommentRepository;
 import com.toy.firstduoproject.service.CommentService;
 import com.toy.firstduoproject.service.dto.CommentRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +17,19 @@ public class CommentController {
 
     //c
     @PostMapping("/posts/{postId}/comment/write")
-    public String createComment(@PathVariable Long postId, CommentRequestDto requestDto, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        commentService.saveComment(requestDto,postId,principalDetails.getMember());
-        return "redirect:/posts/"+postId;
+    public String createComment(@PathVariable Long postId, CommentRequestDto requestDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        commentService.saveComment(requestDto, postId, principalDetails.getMember());
+        return "redirect:/posts/" + postId;
     }
+
+    @PostMapping("/posts/{postId}/comment/{commentId}")
+    public String createReComment(@PathVariable Long postId, @PathVariable Long commentId,
+                                  CommentRequestDto requestDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        commentService.saveReComment(requestDto, commentId, principalDetails.getMember());
+
+        return "redirect:/posts/" + postId;
+    }
+
     //r?
 
     //u

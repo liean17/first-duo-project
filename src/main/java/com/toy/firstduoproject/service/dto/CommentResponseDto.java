@@ -4,6 +4,9 @@ import com.toy.firstduoproject.domain.entity.Comments;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class CommentResponseDto {
@@ -20,11 +23,13 @@ public class CommentResponseDto {
     //포스트아이디?
     private Long postsId;
 
-    public CommentResponseDto(Comments comment){
+    private List<ReCommentDto> reCommentList = new ArrayList<>();
+
+    public CommentResponseDto(Comments comment, List<Comments> reCommentList){
         this.comment = comment.getComment();
         this.createdDate = comment.getCreatedDate();
         this.nickname = comment.getMember().getNickname();
         this.postsId = comment.getPosts().getId();
+        this.reCommentList = reCommentList.stream().map(ReCommentDto::new).collect(Collectors.toList());
     }
-
 }
