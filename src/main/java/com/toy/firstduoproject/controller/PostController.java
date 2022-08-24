@@ -74,7 +74,9 @@ public class PostController {
             model.addAttribute("nickname",nickname);
         }
         Page<Posts> posts = postService.findAll(pageable);
+        List<Posts> notices = postService.findNotice();
         model.addAttribute("posts", posts);
+        model.addAttribute("notice",notices);
         return "posts";
     }
 

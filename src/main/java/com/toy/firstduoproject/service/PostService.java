@@ -46,6 +46,14 @@ public class PostService {
         return postRepository.findAll(pageable);
     }
 
+    /**
+     *
+     * @return 타입이 공지인 Post 의 List
+     */
+    public List<Posts> findNotice(){
+        return postRepository.findAllByPostType(PostType.NOTICE);
+    }
+
     //U
     public void updatePost(Long postId, PostUpdateRequestDto requestDto){
         Posts post = postRepository.findById(postId).orElseThrow();

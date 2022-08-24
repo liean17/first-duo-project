@@ -29,13 +29,13 @@ public class TestDataInit {
         postRepository.save(new Posts("좋아합니다",member1,"감사해요", null, PostType.CHAT,null));
         postRepository.save(new Posts("고맙습니다",member1,"안녕하세요", null, PostType.CHAT,null));
         postRepository.save(new Posts("관리자 뭐하냐",member2,"밑에지워라", null, PostType.CHAT,null));
-        postRepository.save(new Posts("아름답네요",member2,"밑에지워라", null, PostType.CHAT,null));
+        postRepository.save(new Posts("아름답네요",member2,"밑에지워라", null, PostType.FILE,null));
         postRepository.save(new Posts("사랑합니다",member1,"반가워요", null, PostType.CHAT,null));
-        postRepository.save(new Posts("좋아합니다",member1,"감사해요", null, PostType.CHAT,null));
+        postRepository.save(new Posts("좋아합니다",member1,"감사해요", null, PostType.NOTICE,null));
         postRepository.save(new Posts("고맙습니다",member1,"안녕하세요", null, PostType.CHAT,null));
-        postRepository.save(new Posts("관리자 뭐하냐",member2,"밑에지워라", null, PostType.CHAT,null));
+        postRepository.save(new Posts("관리자 뭐하냐",member2,"밑에지워라", null, PostType.INFO,null));
         postRepository.save(new Posts("아름답네요",member2,"밑에지워라", null, PostType.CHAT,null));
-        postRepository.save(new Posts("사랑합니다",member1,"반가워요", null, PostType.CHAT,null));
+        postRepository.save(new Posts("사랑합니다",member1,"반가워요", null, PostType.ETC,null));
         postRepository.save(new Posts("좋아합니다",member1,"감사해요", null, PostType.CHAT,null));
         postRepository.save(new Posts("고맙습니다",member1,"안녕하세요", null, PostType.CHAT,null));
         postRepository.save(new Posts("관리자 뭐하냐",member2,"밑에지워라", null, PostType.CHAT,null));

@@ -22,8 +22,8 @@
         <div>
             <div>분류</div>
             <label>
-                <select th:field="*{postTypes}" class="form-select">
-                    <option th:each="postType : ${postTypes}" th:value="${postType.type}"
+                <select name="postType" class="form-select">
+                    <option th:each="postType : ${postTypes}" th:value="${postType}"
                             th:text="${postType.type}">CHAT</option>
                 </select>
             </label>
