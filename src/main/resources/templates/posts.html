@@ -54,6 +54,15 @@
             </tr>
             </thead>
             <tbody>
+
+            <tr th:each="notice : ${notice}">
+                <td>Notice</td>
+                <td><a href="posts/post.html" th:href="@{/posts/{id}(id=${notice.postType})}" th:text="${notice.postType.type}">분류</a></td>
+                <td><a href="posts/post.html" th:href="@{/member/{id}(id=${notice.getMember().getId()})}" th:text="${notice.member.getNickname()}">작성자</a></td>
+                <td><a href="posts/post.html" th:href="@{|/posts/${notice.getId}|}" th:text="${notice.title}">제목</a></td>
+                <td th:text="${#temporals.format(notice.createdAt, 'MM-dd HH:mm:ss')}">오늘</td>
+            </tr>
+
             <tr th:each="post : ${posts}">
                 <td><a href="posts/post.html" th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.getId}">글 번호</a></td>
                 <td><a href="posts/post.html" th:href="@{/posts/{id}(id=${post.postType})}" th:text="${post.postType.type}">분류</a></td>
