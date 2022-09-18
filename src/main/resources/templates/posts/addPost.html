@@ -34,7 +34,8 @@
         </div>
         <div>
             <label for="image">사진 업로드</label>
-            <input type="file" id="image" name="attachFile">
+<!--            <input type="file" th:each="postType : ${postTypes}">CHAT</input>-->
+            <input multiple="multiple" type="file" id="image" name="attachFiles">
         </div>
 
         <hr class="my-4">

@@ -35,17 +35,18 @@ public class PostService {
                 .build();
 
         List<MultipartFile> attachFiles = requestDto.getAttachFiles();
+        Posts savedPost = postRepository.save(post);
 
         for(MultipartFile file : attachFiles) {
             String storeFilename = fileStore.storeFile(file);
             Image image = Image.builder()
                     .storeFilename(storeFilename)
-                    .posts(post)
+                    .posts(savedPost)
                     .build();
             imageRepository.save(image);
         }
 
-        return postRepository.save(post);
+        return savedPost;
     }
 
     //R
