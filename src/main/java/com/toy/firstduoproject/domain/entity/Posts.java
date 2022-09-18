@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,23 +27,24 @@ public class Posts {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    private String storeFilename;
+//    private String storeFilename;
+    @OneToMany(mappedBy = "posts")
+    private List<Image> images = new ArrayList<>();
 
     private PostType postType;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
     //List 타입의 댓글
-    @OneToMany(mappedBy = "posts",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE)
     @OrderBy("id asc")
-    private List<Comments> comments;
+    private List<Comments> comments = new ArrayList<>();
 
     @Builder
-    public Posts(String title, Member member,String content, String storeFilename, PostType postType, List<Comments> comments) {
+    public Posts(String title, Member member,String content, PostType postType, List<Comments> comments) {
         this.title = title;
         this.content = content;
         this.member = member;
-        this.storeFilename = storeFilename;
         this.postType = postType;
         this.comments = comments;
     }
@@ -54,5 +56,12 @@ public class Posts {
 
     public void changePostType(PostType postType) {
         this.postType = postType;
+    }
+
+    public void addImage(Image image) {
+        this.images.add(image);
+        if (image.getPosts() != this) {
+            image.setPosts(this);
+        }
     }
 }

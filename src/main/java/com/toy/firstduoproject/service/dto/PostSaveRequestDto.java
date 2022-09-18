@@ -15,21 +15,22 @@ public class PostSaveRequestDto {
     @NotBlank
     private String content;
 
-    private MultipartFile attachFile;
+//    private MultipartFile attachFile;
+    private List<MultipartFile> attachFiles;
 
     private PostType postType;
 
-    public PostSaveRequestDto(String title, String content, MultipartFile attachFile, PostType postType) {
+//    public PostSaveRequestDto(String title, String content, MultipartFile attachFile, PostType postType) {
+//        this.title = title;
+//        this.content = content;
+//        this.attachFile = attachFile;
+//        this.postType = Objects.requireNonNullElse(postType, PostType.CHAT);
+//    }
+
+    public PostSaveRequestDto(String title, String content, List<MultipartFile> attachFiles, PostType postType) {
         this.title = title;
         this.content = content;
-        this.attachFile = attachFile;
-        this.postType = Objects.requireNonNullElse(postType, PostType.CHAT);
+        this.attachFiles = attachFiles;
+        this.postType = postType;
     }
-
-    //    public Posts toEntity() {
-//        return Posts.builder()
-//                .title(title)
-//                .content(content)
-//                .build();
-//    }
 }
