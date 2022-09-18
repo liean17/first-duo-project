@@ -58,7 +58,9 @@
     </div>
     <div>
         <div>사진</div>
-        <img th:if="${post.getStoreFilename()}" th:src="|/images/${post.getStoreFilename()}|" width="500" height="500"/>
+        <a th:each="img : ${post.getImages()}">
+            <img th:if="${img.getStoreFilename()}" th:src="|/images/${img.getStoreFilename()}|" width="500" height="500"/>
+        </a>
     </div>
 
     <hr class="my-4">
