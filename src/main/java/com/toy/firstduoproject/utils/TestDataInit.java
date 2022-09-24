@@ -1,10 +1,10 @@
 package com.toy.firstduoproject.utils;
 
-import com.toy.firstduoproject.member.Member;
-import com.toy.firstduoproject.postType.PostType;
-import com.toy.firstduoproject.member.MemberRepository;
-import com.toy.firstduoproject.posts.PostRepository;
-import com.toy.firstduoproject.posts.Posts;
+import com.toy.firstduoproject.member.entity.Member;
+import com.toy.firstduoproject.postType.entity.PostType;
+import com.toy.firstduoproject.member.repository.MemberRepository;
+import com.toy.firstduoproject.posts.repository.PostRepository;
+import com.toy.firstduoproject.posts.entity.Posts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

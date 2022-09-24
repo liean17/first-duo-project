@@ -1,7 +1,7 @@
 package com.toy.firstduoproject.config.auth;
 
-import com.toy.firstduoproject.member.Member;
-import com.toy.firstduoproject.member.MemberRepository;
+import com.toy.firstduoproject.member.entity.Member;
+import com.toy.firstduoproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
