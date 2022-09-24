@@ -1,7 +1,6 @@
 package com.toy.firstduoproject.config.auth;
 
-import com.toy.firstduoproject.domain.entity.Member;
-import com.toy.firstduoproject.repository.MemberRepository;
+import com.toy.firstduoproject.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;

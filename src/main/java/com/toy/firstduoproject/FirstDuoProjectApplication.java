@@ -1,7 +1,8 @@
 package com.toy.firstduoproject;
 
-import com.toy.firstduoproject.repository.MemberRepository;
-import com.toy.firstduoproject.repository.PostRepository;
+import com.toy.firstduoproject.member.MemberRepository;
+import com.toy.firstduoproject.posts.PostRepository;
+import com.toy.firstduoproject.utils.TestDataInit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

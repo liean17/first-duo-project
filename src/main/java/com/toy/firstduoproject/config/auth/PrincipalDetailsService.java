@@ -1,14 +1,12 @@
 package com.toy.firstduoproject.config.auth;
 
-import com.toy.firstduoproject.domain.entity.Member;
-import com.toy.firstduoproject.repository.MemberRepository;
+import com.toy.firstduoproject.member.Member;
+import com.toy.firstduoproject.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
 
 @RequiredArgsConstructor
 @Service
