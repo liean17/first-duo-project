@@ -43,8 +43,7 @@ jobs:
       run: |   
         mkdir -p deploy-server/                              
         chmod +x ./gradlew                         
-        ./gradlew clean bootjar
-        cd ..                                       
+        ./gradlew clean bootjar                   
         cp build/libs/*.jar deploy-server/   
       shell: bash
   
@@ -58,16 +57,15 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-2
     
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./deploy-server.zip s3://$S3_BUCKET_NAME/deploy-server.zip
-    
-#     - name: Code Deploy
-#       run: >
-#         aws deploy create-deployment --application-name seb-main-006
-#         --deployment-config-name CodeDeployDefault.AllAtOnce
-#         --deployment-group-name seb-main-006-group
-#         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy-server.zip
+    - name: Code Deploy
+      run: >
+        aws deploy create-deployment --application-name kdk-codedeploy
+        --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name kdk-baepo-ec2-baby-comeon-cyberfunk2077-forever-juingongdie-moon
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy-server.zip
