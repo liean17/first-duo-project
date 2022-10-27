@@ -66,6 +66,6 @@ jobs:
     - name: Code Deploy
       run: >
         aws deploy create-deployment --application-name kdk-codedeploy
-         --deployment-config-name CodeDeployDefault.AllAtOnce
-         --deployment-group-name kdk-baepo-ec2-baby-comeon-cyberfunk2077-forever-juingongdie-moon
-         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy-server.zip
+        --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name kdk-baepo-ec2-baby-comeon-cyberfunk2077-forever-juingongdie-moon
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy-server.zip
