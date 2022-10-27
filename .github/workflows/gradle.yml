@@ -43,8 +43,7 @@ jobs:
       run: |   
         mkdir -p deploy-server/                              
         chmod +x ./gradlew                         
-        ./gradlew clean bootjar
-        cd ..                                       
+        ./gradlew clean bootjar                   
         cp build/libs/*.jar deploy-server/   
       shell: bash
   
