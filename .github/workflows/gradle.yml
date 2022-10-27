@@ -63,10 +63,9 @@ jobs:
     
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./deploy-server.zip s3://$S3_BUCKET_NAME/deploy-server.zip
-    
-#     - name: Code Deploy
-#       run: >
-#         aws deploy create-deployment --application-name seb-main-006
-#         --deployment-config-name CodeDeployDefault.AllAtOnce
-#         --deployment-group-name seb-main-006-group
-#         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy-server.zip
+    - name: Code Deploy
+      run: >
+        aws deploy create-deployment --application-name kdk-codedeploy
+         --deployment-config-name CodeDeployDefault.AllAtOnce
+         --deployment-group-name kdk-baepo-ec2-baby-comeon-cyberfunk2077-forever-juingongdie-moon
+         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy-server.zip
