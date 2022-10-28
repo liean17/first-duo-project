@@ -14,6 +14,7 @@ public class AwsConfig {
     private String iamAccessKey;
     @Value("${cloud.aws.credentials.secret-key}")
     private String iamSecretKey;
+    @Value("${cloud.aws.s3.region.stack}")
     private String region = "ap-northeast-2";
 
     @Bean
