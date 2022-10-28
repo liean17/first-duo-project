@@ -1,5 +1,9 @@
 package com.toy.firstduoproject.posts.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.toy.firstduoproject.image.entity.Image;
 import com.toy.firstduoproject.member.entity.Member;
 import com.toy.firstduoproject.postType.entity.PostType;
@@ -10,6 +14,7 @@ import com.toy.firstduoproject.posts.entity.Posts;
 import com.toy.firstduoproject.posts.repository.PostRepository;
 import com.toy.firstduoproject.utils.uploadFile.FileStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,9 +29,12 @@ public class PostService {
     private final ImageRepository imageRepository;
     private final FileStore fileStore;
 
+    final AmazonS3Client amazonS3Client;
+    @Value("${cloud.aws.s3.bucket}")
+    private String S3Bucket;
+
     //C
     public Posts createPost(PostSaveRequestDto requestDto, Member member) throws IOException {
-//        String storeFilename = fileStore.storeFile(requestDto.getAttachFile());
 
         Posts post = Posts.builder()
                 .title(requestDto.getTitle())
@@ -35,20 +43,36 @@ public class PostService {
                 .postType(requestDto.getPostType())
                 .build();
 
-        List<MultipartFile> attachFiles = requestDto.getAttachFiles();
         Posts savedPost = postRepository.save(post);
+        List<MultipartFile> attachFiles = requestDto.getAttachFiles();
+        extracted(attachFiles, savedPost);
+
+        return savedPost;
+    }
+
+    private void extracted(List<MultipartFile> attachFiles, Posts savedPost) throws IOException {
 
         for(MultipartFile file : attachFiles) {
             String storeFilename = fileStore.storeFile(file);
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentType(file.getContentType());
+            objectMetadata.setContentLength(file.getSize());
+
+            amazonS3Client.putObject(
+                    new PutObjectRequest(S3Bucket,storeFilename,file.getInputStream(),objectMetadata)
+                            .withCannedAcl(CannedAccessControlList.PublicRead)
+            );
+
+            String imagePath = amazonS3Client.getUrl(S3Bucket, storeFilename).toString();
+
             Image image = Image.builder()
-                    .storeFilename(storeFilename)
+                    .storeFilename(imagePath)
                     .posts(savedPost)
                     .build();
             imageRepository.save(image);
         }
-
-        return savedPost;
     }
+
 
     //R
     public Posts findPostById(Long postId){

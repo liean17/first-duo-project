@@ -3,7 +3,6 @@ package com.toy.firstduoproject.utils.uploadFile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -23,7 +22,6 @@ public class FileStore {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFilename = createStoreFileName(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(storeFilename)));
 
         return storeFilename;
     }
